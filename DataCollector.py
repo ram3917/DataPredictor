@@ -36,4 +36,5 @@ df['Monthly_var'] = df.rolling(30).var()
 
 # Save data
 df = df.round(2)
-df.to_csv("tata_motors.csv")
+df.to_csv("data/tata_motors.csv")
+df.to_json("data/tata_motors.json")
