@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 
 import plotly
-import plotly.graph_objs as go
+import plotly.graph_objects as go
 
 import pandas as pd
 import numpy as np
@@ -9,7 +9,7 @@ import json
 
 import DataCollector as dc
 
-app = Flask(__name__, static_folder="./static", template_folder="./static")
+app = Flask(__name__, static_folder="./static", template_folder="./static/templates")
 
 
 def create_graph():
@@ -19,6 +19,7 @@ def create_graph():
     cols = ["Tata", "Reliance"]
     df = pd.DataFrame(data=None,columns=cols)
 
+    # Get closing price
     # Get closing price
     tata_df = dc.GetStockData("TATAMOTORS.NS")
     df["Tata"] = tata_df['Close'].copy()
