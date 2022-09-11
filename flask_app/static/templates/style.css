@@ -1,0 +1,14 @@
+body: 
+{
+    margin: 0;
+    padding: 10px;
+}
+
+.headingLight
+{
+    color: #000;
+}
+
+.headingDark {
+    color: white;
+}

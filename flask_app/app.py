@@ -7,7 +7,7 @@ import pandas as pd
 import numpy as np
 import json
 
-import DataCollector as dc
+import flask_app.data_collector as dc
 
 app = Flask(__name__, static_folder="./static", template_folder="./static/templates")
 
