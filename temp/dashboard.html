@@ -10,41 +10,7 @@
 <script type="text/javascript" src="dashboard.js"></script>
 
 <head>
-    <!-- DUMMY : REMOVE THIS-->
-    <script type="text/javascript">
-        window.onload = function () {
-          var chart = new CanvasJS.Chart("chartContainer",
-          {
-      
-            title:{
-            text: "Stock Price"
-            },
-             data: [
-            {
-              type: "line",
-      
-              dataPoints: [
-              { x: new Date(2012, 00, 1), y: 450 },
-              { x: new Date(2012, 01, 1), y: 414 },
-              { x: new Date(2012, 02, 1), y: 520 },
-              { x: new Date(2012, 03, 1), y: 460 },
-              { x: new Date(2012, 04, 1), y: 450 },
-              { x: new Date(2012, 05, 1), y: 500 },
-              { x: new Date(2012, 06, 1), y: 480 },
-              { x: new Date(2012, 07, 1), y: 480 },
-              { x: new Date(2012, 08, 1), y: 410 },
-              { x: new Date(2012, 09, 1), y: 500 },
-              { x: new Date(2012, 10, 1), y: 480 },
-              { x: new Date(2012, 11, 1), y: 510 }
-              ]
-            }
-            ]
-          });
-      
-          chart.render();
-        }
-    </script>
-    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <!-- HEAD -->
 </head>
 <body class="bg-light">
     <div class="container-xxl">
@@ -61,7 +27,7 @@
               </form>
             </div>
         </nav>
-
+%
         <!-- Container for the dashboard -->
         <div class="container-fluid">
             <div class="row align-items-md-stretch">
@@ -108,7 +74,15 @@
                 </div>
               </div>
               <div class="col-8 p-3">
-                <div id="chartContainer" style="width: 95%;"> </div>
+                <div class="chart" id="myDiv" style="width: 95%;">
+                  <script>
+                      var graphs = {{plot | safe}};                    
+                      var layout = {
+                      title:'Stock Price over Time'
+                      };
+                      Plotly.newPlot('myDiv',graphs,layout);
+                  </script>
+              </div>
               </div>             
               <div class="col col-lg-2 p-3">
                 <div class="row py-3 gy-5">

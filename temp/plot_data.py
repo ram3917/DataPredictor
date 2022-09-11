@@ -6,7 +6,7 @@ Created on Mon Feb  1 22:12:42 2021
 @author: rama
 """
 
-import DataCollector as dc
+import flask_app.data_collector as dc
 import pandas as pd
 import matplotlib.pyplot as plt
 
