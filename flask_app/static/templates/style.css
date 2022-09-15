@@ -12,3 +12,8 @@ body:
 .headingDark {
     color: white;
 }
+
+.scrollDropdown {
+    height: 250px;
+    overflow-y: auto;
+}
