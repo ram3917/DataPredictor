@@ -18,3 +18,31 @@ $(document).ready(function(){
 })
 
 });
+
+function toggle(value)
+{
+    $('.dropdown-toggle').dropdown();
+    $('.dropdown-toggle').val(value);
+    $('.dropdown-toggle').text(value);
+}
+
+function filter(indices)
+{
+   console.log(indices); 
+   input = document.getElementById("filterInput").value.toUpperCase();
+
+   options = document.getElementById('indexList');
+   elements = options.getElementsByTagName("a");
+   for(e of elements)
+   {
+    txtValue = e.innerText;
+    if (!txtValue.toUpperCase().includes(input)) 
+    {
+      e.style.display = "none";
+    }
+    else
+    {
+        e.style.display = "";
+    }
+   }
+}

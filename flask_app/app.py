@@ -3,6 +3,8 @@ from flask import Flask, render_template
 import plotly
 import plotly.graph_objects as go
 
+from pytickersymbols import PyTickerSymbols
+
 import pandas as pd
 import numpy as np
 import json
@@ -47,11 +49,12 @@ def create_graph():
 
     return graphJSON
 
-
 @app.route('/')
 def index():
+    stock_data = PyTickerSymbols()
+    indices = stock_data.get_all_indices()
     graph = create_graph()
-    return render_template("index.html", plot=graph)
+    return render_template("index.html", plot=graph, indices=indices)
 
 
 if __name__ == '__main__':
