@@ -9,7 +9,7 @@ import pandas as pd
 import numpy as np
 import json
 
-import flask_app.data_collector as dc
+import app.data_collector as dc
 
 app = Flask(__name__, static_folder="./static", template_folder="./static/templates")
 
@@ -58,4 +58,4 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(port=5000)
