@@ -40,7 +40,11 @@ function updateGraph(value)
         url: "/updateGraph",
         data: JSON.stringify(value),
         contentType: "application/json",
-        dataType: 'json'
+        dataType: 'json',
+        success: function(response)
+        {
+            Plotly.newPlot('myDiv', response, layout);
+        }
     });
 }
 

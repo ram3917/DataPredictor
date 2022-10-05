@@ -100,10 +100,11 @@ def updateGraph():
     # JSON for plotting
     graphJSON = json.dumps(data, cls=plotly.utils.PlotlyJSONEncoder)
 
-    return render_template("index.html", 
-                plot=graphJSON,
-                indices=indices,
-                selectedIndices=indices)
+    return str(graphJSON)
+    # return render_template("index.html", 
+    #             plot=graphJSON,
+    #             indices=indices,
+    #             selectedIndices=indices)
 
 if __name__ == '__main__':
     app.run(threaded=True, port=5000)
