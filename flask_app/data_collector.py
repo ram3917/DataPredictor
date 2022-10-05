@@ -11,9 +11,9 @@ import yfinance as yf
 """
 DATA-COLLECTOR shall gather data for selected stocks from yahoo finance.
 """
-def GetStockData(index="", duration="1y"):
+def GetStockData(index="", duration="max"):
     # Query data
     idx = yf.Ticker(index)
-    df = idx.history(duration)
+    df = idx.history(period=duration)
     
     return df
