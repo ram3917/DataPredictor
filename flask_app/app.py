@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, render_template, redirect, request, url_for, jsonify
 
 import plotly
@@ -115,4 +117,4 @@ def updateGraph():
     return str(graphJSON)
 
 if __name__ == '__main__':
-    app.run(threaded=True, port=5000)
+    app.run(port=os.environ.get("PORT", 5000), host='0.0.0.0', debug=False, threaded=True)
