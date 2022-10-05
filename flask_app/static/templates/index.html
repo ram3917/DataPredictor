@@ -38,35 +38,46 @@
       <div class="container-fluid">
           <div class="row align-items-md-stretch">
             <div class="col col-lg-2 p-3">
-              <div class="row py-3 gy-5">    
-                <div class="p-3 dropdown-center">
-                  <button class="btn btn-secondary dropdown-toggle" onclick="toggle()" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    List of Indices
-                  </button>
-                  <ul id="indexList" class="dropdown-menu scrollDropdown">
-                    <div class="input-group px-3 py-3">
-                        <span class="input-group-text" id="basic-addon1">
-                          <i class="bi bi-search"></i>
-                        </span>
-                      <input type="text" class="form-control" placeholder="" aria-label="Indices" aria-describedby="basic-addon1" id="filterInput" onkeyup="filter()">
-                    </div>
-                    {% for idx in selectedIndices %}
-                      <li>
-                        <a class="dropdown-item" onclick="addIndexToList(this.innerHTML)" style="display: display-listitem;">{{idx}}</a>
-                      </li>
-                    {% endfor %}
-                  </ul>
-                </div>              
-              </div>
+              <div class="row py-3 gy-5 dropdown-item">   
+                    <button class="btn btn-secondary dropdown-toggle" id="country" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Select Countries
+                    </button>
+                    <ul id="countryList" class="dropdown-menu scrollDropdown">
+                      <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">
+                            <i class="bi bi-search"></i>
+                          </span>
+                        <input type="text" class="form-control" placeholder="" aria-label="Indices" aria-describedby="basic-addon1" id="filterCountry" onkeyup="filter('filterCountry', 'countryList')">
+                      </div>
+                      {% for country in countryList %}
+                        <li>
+                          <a class="dropdown-item" onclick="updateCountry(this.innerHTML)" style="display: display-listitem;">{{country}}</a>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                </div> 
+                <div class="row py-3 gy-5 dropdown-item">
+                    <button class="btn btn-secondary dropdown-toggle" id="index" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Choose Indices
+                    </button>
+                    <ul id="indexList" class="dropdown-menu scrollDropdown">
+                      <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">
+                            <i class="bi bi-search"></i>
+                          </span>
+                        <input type="text" class="form-control" placeholder="" aria-label="Indices" aria-describedby="basic-addon1" id="filterIndex" onkeyup="filter('filterIndex', 'indexList')">
+                      </div>
+                      {% for idx in indices %}
+                        <li>
+                          <a class="dropdown-item" onclick="updateIndices(this.innerHTML)" style="display: display-listitem;">{{idx}}</a>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                </div>     
+
               <div class="row py-3 gy-5">
-                <ul class="list-group scrollDropdown">
-                  {% for idx in indices %}
-                  <li class="list-group-item d-flex justify-content-between align-items-center"
-                        onclick="updateGraph('{{idx}}')">
-                    {{idx}}
-                    <!-- <span class="badge badge-primary badge-pill">14</span> -->
-                  </li>                  
-                  {% endfor %}
+                <ul class="list-group scrollList" id="stockList">
+                  <!-- Add the list of stcoks when populated -->
                 </ul>
               </div>
             </div>

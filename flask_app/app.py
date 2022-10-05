@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, url_for, session
+from flask import Flask, render_template, redirect, request, url_for, jsonify
 
 import plotly
 import plotly.graph_objects as go
@@ -22,7 +22,6 @@ def create_graph():
     df = pd.DataFrame(data=None,columns=cols)
 
     # Get closing price
-    # Get closing price
     tata_df = dc.GetStockData("TATAMOTORS.NS")
     df["Tata"] = tata_df['Close'].copy()
 
@@ -33,7 +32,7 @@ def create_graph():
     data = [
         go.Line(
             x=df.index, # assign x as the dataframe column 'x'
-            y=df['Tata']
+            y=[]
         )
     ]
 
@@ -44,29 +43,44 @@ def create_graph():
 
 @app.route('/')
 def index():
-    indexList = PyTickerSymbols()
-    stockList = indexList.get_stocks_by_index('DAX')
 
-    indices = []
-    for stock in stockList:
-        indices.append(stock['name'])
+    pys = PyTickerSymbols()
+    countryList = pys.get_all_countries()
+    indexList = pys.get_all_indices()
 
     graph = create_graph()
 
     return render_template("index.html", 
                 plot=graph,
-                indices=indices,
-                selectedIndices=indices)
+                countryList=countryList,
+                indices=indexList,
+                selectedStocks=[])
 
-@app.route('/addIndexToList', methods=['POST'])
-def addIndexToList():
+@app.route('/updateCountry', methods=['GET', 'POST'])
+def updateCountry():
     value = request.get_json()
-    if len(selectedIndices)==0:
-        selectedIndices = selectedIndices.append(value)
-    else:
-        selectedIndices = [value]
+    pys = PyTickerSymbols()
+    stocksList = pys.get_stocks_by_country(value)
 
-    return redirect(url_for("/index"))
+    stocks = []
+    for s in stocksList:
+        stocks.append(s['name'])
+
+    return jsonify(render_template('stockList.html',
+             selectedStocks=stocks))
+
+@app.route('/updateIndex', methods=['GET', 'POST'])
+def updateIndex():
+    value = request.get_json()
+    pys = PyTickerSymbols()
+    stocksList = pys.get_stocks_by_index(value)
+
+    stocks = []
+    for s in stocksList:
+        stocks.append(s['name'])
+
+    return jsonify(render_template('stockList.html',
+             selectedStocks=stocks))
 
 @app.route('/updateGraph', methods=['GET', 'POST'])
 def updateGraph():
@@ -74,12 +88,10 @@ def updateGraph():
     index = request.get_json()
     df = pd.DataFrame(data=None,columns=[index])
 
-    indexList = PyTickerSymbols()
-    stockList = indexList.get_stocks_by_index('DAX')
+    pys = PyTickerSymbols()
+    stockList = pys.get_all_stocks()
 
-    indices = []
     for stock in stockList:
-        indices.append(stock['name'])
         if stock['name'] == index:
             symbol = stock['symbol']
             idx_df = dc.GetStockData(symbol)
@@ -101,10 +113,6 @@ def updateGraph():
     graphJSON = json.dumps(data, cls=plotly.utils.PlotlyJSONEncoder)
 
     return str(graphJSON)
-    # return render_template("index.html", 
-    #             plot=graphJSON,
-    #             indices=indices,
-    #             selectedIndices=indices)
 
 if __name__ == '__main__':
     app.run(threaded=True, port=5000)

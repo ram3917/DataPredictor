@@ -19,18 +19,39 @@ $(document).ready(function(){
 
 });
 
-function addIndexToList(value)
+function updateIndices(value)
 {
-    $('.dropdown-toggle').dropdown();
     $.ajax({
         type: "POST",
-        url: "/addIndexToList",
+        url: "/updateIndex",
         data: JSON.stringify(value),
         contentType: "application/json",
-        dataType: 'json' 
+        dataType: 'json',
+        success: function(response)
+        {
+            $("#stockList").html(response);
+        }
     });
-    $('.dropdown-toggle').val(value);
-    $('.dropdown-toggle').text(value);
+    $("#index").val(value);
+    $("#index").text(value);
+}
+
+function updateCountry(value)
+{
+    ("#country").dropdown;
+    $.ajax({
+        type: "POST",
+        url: "/updateCountry",
+        data: JSON.stringify(value),
+        contentType: "application/json",
+        dataType: 'json',
+        success: function(response)
+        {
+            $("#stockList").html(response);
+        }
+    });
+    $("#country").val(value);
+    $("#country").text(value);
 }
 
 function updateGraph(value)
@@ -48,12 +69,11 @@ function updateGraph(value)
     });
 }
 
-function filter(indices)
+function filter(inputName, listName)
 {
-   console.log(indices); 
-   input = document.getElementById("filterInput").value.toUpperCase();
+   input = document.getElementById(inputName).value.toUpperCase();
 
-   options = document.getElementById('indexList');
+   options = document.getElementById(listName);
    elements = options.getElementsByTagName("a");
    for(e of elements)
    {
