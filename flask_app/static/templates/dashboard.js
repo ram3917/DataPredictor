@@ -19,11 +19,29 @@ $(document).ready(function(){
 
 });
 
-function toggle(value)
+function addIndexToList(value)
 {
     $('.dropdown-toggle').dropdown();
+    $.ajax({
+        type: "POST",
+        url: "/addIndexToList",
+        data: JSON.stringify(value),
+        contentType: "application/json",
+        dataType: 'json' 
+    });
     $('.dropdown-toggle').val(value);
     $('.dropdown-toggle').text(value);
+}
+
+function updateGraph(value)
+{
+    $.ajax({
+        type: "POST",
+        url: "/updateGraph",
+        data: JSON.stringify(value),
+        contentType: "application/json",
+        dataType: 'json'
+    });
 }
 
 function filter(indices)

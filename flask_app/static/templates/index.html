@@ -15,7 +15,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
 
 <head lang="en">
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" content= "width=device-width, initial-scale=1.0">
     <title>My First Dashboard</title>
 </head>
 <body class="bg-light">
@@ -50,28 +50,23 @@
                         </span>
                       <input type="text" class="form-control" placeholder="" aria-label="Indices" aria-describedby="basic-addon1" id="filterInput" onkeyup="filter()">
                     </div>
-                    {% for idx in indices %}
+                    {% for idx in selectedIndices %}
                       <li>
-                        <a class="dropdown-item" onclick="toggle(this.innerHTML)" style="display: display-listitem;">{{idx}}</a>
+                        <a class="dropdown-item" onclick="addIndexToList(this.innerHTML)" style="display: display-listitem;">{{idx}}</a>
                       </li>
                     {% endfor %}
                   </ul>
                 </div>              
               </div>
               <div class="row py-3 gy-5">
-                <ul class="list-group">
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Cras justo odio
-                    <span class="badge badge-primary badge-pill">14</span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Dapibus ac facilisis in
-                    <span class="badge badge-primary badge-pill">2</span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Morbi leo risus
-                    <span class="badge badge-primary badge-pill">1</span>
-                  </li>
+                <ul class="list-group scrollDropdown">
+                  {% for idx in indices %}
+                  <li class="list-group-item d-flex justify-content-between align-items-center"
+                        onclick="updateGraph('{{idx}}')">
+                    {{idx}}
+                    <!-- <span class="badge badge-primary badge-pill">14</span> -->
+                  </li>                  
+                  {% endfor %}
                 </ul>
               </div>
             </div>
@@ -111,6 +106,9 @@
                     </div>
                   </div>
               </div>
+              <div class="row py-3 gy-5">
+                <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="ramashwinkX" data-description="Support me on Buy me a coffee!" data-message="Thank you for caffeinating more ideas" data-color="#FF5F5F" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+            </div>
             </div>
           </div>
       </div>
