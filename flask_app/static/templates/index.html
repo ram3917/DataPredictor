@@ -57,7 +57,7 @@
                       {% endfor %}
                     </ul>
                     <button class="btn btn-secondary dropdown-toggle disabled" id="exchange" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Choose Exchange
+                      Select Exchange
                     </button>
                     <ul id="exchangeList" class="dropdown-menu scrollDropdown">
                       <!-- Inculude exchange list -->
@@ -73,11 +73,9 @@
             <div class="col-8 p-3">
               <div class="chart" id="myDiv" style="width: 95%;">
                 <script>
-                    var graphs = {{plot|safe}};                    
-                    var layout = {
-                    title:'Stock Price over Time'
-                    };
-                    Plotly.newPlot('myDiv',graphs,layout);
+                    var graphs = {{plot|safe}};   
+                    var layout = {};                 
+                    Plotly.newPlot('myDiv',graphs, layout); 
                 </script>
             </div>
             </div>             

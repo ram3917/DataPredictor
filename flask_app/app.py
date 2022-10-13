@@ -48,14 +48,18 @@ def create_graph(symbol):
     fig.add_trace(
         go.Scatter(x=df.index, y=df['Monthly_average'], mode='lines+markers', name='Monthly Average'))
 
-
     # Add range slider
     fig.update_layout(
         xaxis=dict(
+            range=[df.index.min(), df.index.max()],
             rangeselector=dict(
                 buttons=list([
                     dict(count=1,
                         label="1m",
+                        step="month",
+                        stepmode="backward"),
+                    dict(count=3,
+                        label="3m",
                         step="month",
                         stepmode="backward"),
                     dict(count=6,
@@ -63,14 +67,13 @@ def create_graph(symbol):
                         step="month",
                         stepmode="backward"),
                     dict(count=1,
-                        label="YTD",
-                        step="year",
-                        stepmode="todate"),
-                    dict(count=1,
                         label="1y",
                         step="year",
                         stepmode="backward"),
-                    dict(step="all")
+                    dict(count=1,
+                        label="YTD",
+                        step="year",
+                        stepmode="todate")
                 ])
             ),
             rangeslider=dict(
@@ -79,7 +82,6 @@ def create_graph(symbol):
             type="date"
         )
     )
-
 
     # JSON for plotting
     graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)

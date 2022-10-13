@@ -24,3 +24,15 @@ body:
     width: 350px;
     overflow-y: auto;
 }
+
+#spinner {
+    margin: auto;
+    width: 20px;
+    height: 20px;
+    border: solid black;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0
+}

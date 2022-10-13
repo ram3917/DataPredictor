@@ -24,7 +24,7 @@ stockList.reset_index(drop=True)
 def GetStockData(index="", duration="max"):
     # Query data
     idx = yf.Ticker(index)
-    df = idx.history(period=duration)
+    df = idx.history(period=duration, interval="1d")
     
     return df
 

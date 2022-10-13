@@ -71,6 +71,9 @@ function updateGraph(value)
 
     var exchange = $("#exchange").val();
 
+    // Start spinner
+    $('#myDiv').html('<div class="spinner-grow text-dark" id="spinner" position=" style="width: 10px; height: 10px;" role="status"></div>');
+
     $.ajax({
         type: "POST",
         url: "/updateGraph",
@@ -79,6 +82,9 @@ function updateGraph(value)
         dataType: 'json',
         success: function(response)
         {
+            // End spinner and plot
+            $('#myDiv').html('');
+            var layout = {};  
             Plotly.newPlot('myDiv', response, layout);
         }
     });
