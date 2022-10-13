@@ -19,11 +19,11 @@ $(document).ready(function(){
 
 });
 
-function updateIndices(value)
+function updateExchange(value)
 {
     $.ajax({
         type: "POST",
-        url: "/updateIndex",
+        url: "/updateExchange",
         data: JSON.stringify(value),
         contentType: "application/json",
         dataType: 'json',
@@ -32,8 +32,8 @@ function updateIndices(value)
             $("#stockList").html(response);
         }
     });
-    $("#index").val(value);
-    $("#index").text(value);
+    $("#exchange").val(value);
+    $("#exchange").text(value);
 }
 
 function updateCountry(value)
@@ -47,7 +47,10 @@ function updateCountry(value)
         dataType: 'json',
         success: function(response)
         {
-            $("#stockList").html(response);
+            ex = document.getElementById('exchange');
+            ex.classList.remove('disabled');
+            $('#exchangeList').html(response);
+            $('#stockList').html('');
         }
     });
     $("#country").val(value);
@@ -66,10 +69,12 @@ function updateGraph(value)
     option = document.getElementById(value);
     option.classList.add('active');
 
+    var exchange = $("#exchange").val();
+
     $.ajax({
         type: "POST",
         url: "/updateGraph",
-        data: JSON.stringify(value),
+        data: JSON.stringify({stock: value, exchange: exchange}),
         contentType: "application/json",
         dataType: 'json',
         success: function(response)
