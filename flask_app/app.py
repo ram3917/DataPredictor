@@ -1,4 +1,6 @@
 import os
+from unicodedata import name
+from venv import create
 
 from flask import Flask, render_template, redirect, request, url_for, jsonify
 
@@ -16,25 +18,40 @@ import flask_app.data_collector as dc
 app = Flask(__name__, static_folder="./static", template_folder="./static/templates")
 app.config['SECRET_KEY'] = "SECRET_KEY_VALUE"
 
-def create_graph():
+def create_graph(symbol):
     """
     The following script downloads and plots data from Stock market.
     """
-    cols = ["Tata"]
+    cols = [symbol]
     df = pd.DataFrame(data=None,columns=cols)
 
     # Get closing price
-    tata_df = dc.GetStockData("TATAMOTORS.NS")
-    df["Tata"] = tata_df['Close'].copy()
+    tmp_df = dc.GetStockData(symbol)
+    df[symbol] = tmp_df['Close'].copy()
 
     # drop na
     df.fillna(method='ffill', inplace=True)
     df.fillna(method='bfill', inplace=True)
 
+    # Calculate the rolling averages for 7 days and 30 days
+    df['Weekly_average'] = df[symbol].rolling(7).mean()
+    df['Monthly_average'] = df[symbol].rolling(30).mean()
+
     data = [
         go.Line(
             x=df.index, # assign x as the dataframe column 'x'
-            y=[]
+            y=df[symbol],
+            name='Closing Price'
+        ),
+        go.Line(
+            x=df.index, # assign x as the dataframe column 'x'
+            y=df['Weekly_average'],
+            name='Weekly Change'
+        ),
+        go.Line(
+            x=df.index, # assign x as the dataframe column 'x'
+            y=df['Monthly_average'],
+            name='Monthly Change'
         )
     ]
 
@@ -50,7 +67,7 @@ def index():
     countryList = pys.get_all_countries()
     indexList = pys.get_all_indices()
 
-    graph = create_graph()
+    graph = []
 
     return render_template("index.html", 
                 plot=graph,
@@ -96,23 +113,9 @@ def updateGraph():
     for stock in stockList:
         if stock['name'] == index:
             symbol = stock['symbol']
-            idx_df = dc.GetStockData(symbol)
-            df[index] = idx_df['Close'].copy()
             break
-
-    # drop na
-    df.fillna(method='ffill', inplace=True)
-    df.fillna(method='bfill', inplace=True)
-
-    data = [
-        go.Line(
-            x=df.index, # assign x as the dataframe column 'x'
-            y=df[index]
-        )
-    ]
-
-    # JSON for plotting
-    graphJSON = json.dumps(data, cls=plotly.utils.PlotlyJSONEncoder)
+    
+    graphJSON = create_graph(symbol)
 
     return str(graphJSON)
 

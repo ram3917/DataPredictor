@@ -55,7 +55,17 @@ function updateCountry(value)
 }
 
 function updateGraph(value)
-{
+{   
+    options = document.getElementById('stockList');
+    elements = options.getElementsByTagName("li");
+    for(e of elements)
+    {
+        e.classList.remove('active');
+    }
+
+    option = document.getElementById(value);
+    option.classList.add('active');
+
     $.ajax({
         type: "POST",
         url: "/updateGraph",
