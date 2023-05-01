@@ -16,7 +16,7 @@ DATA-COLLECTOR shall gather data for selected stocks from yahoo finance.
 '''
 Source : https://investexcel.net/all-yahoo-finance-stock-tickers/
 '''
-stockList = pd.read_excel(io="./Yahoo Ticker Symbols - September 2017.xlsx",
+stockList = pd.read_excel(io="./streamlit_app/Yahoo Ticker Symbols - September 2017.xlsx",
                 sheet_name= 'Stock', usecols='A:E', skiprows=3, index_col=None)
 
 stockList.reset_index(drop=True)
