@@ -6,14 +6,14 @@ st.title('Stock Price for the Last Year')
 
 # Using object notation
 select_exchange = st.sidebar.selectbox(
-    "Which Stock do you want to predict?",
+    "Which Exchange are we looking at?",
     (stockList['Exchange'].unique())
 )
 
 if select_exchange:
     # Using object notation
     select_name = st.sidebar.selectbox(
-        "Which Stock do you want to predict?",
+        "Which Stock do you want to look at?",
         (stockList[stockList['Exchange']==select_exchange]['Name'].to_list())
     )
 else:
@@ -29,7 +29,7 @@ if select_exchange and select_name:
     symbol = symbol.reset_index()
         
     # Get closing price
-    df = GetStockData(symbol['Ticker'][0])
+    df = GetStockData(symbol['Ticker'][0], '5y')
     df = df.reset_index()
     # drop na
     df.fillna(method='ffill', inplace=True)
@@ -41,5 +41,5 @@ if select_exchange and select_name:
 
     plot_df = df[['Date','Close', 'Weekly_average','Monthly_average']].copy()
 
-    # st.header(symbol)
+    st.header(select_name)
     st.line_chart(plot_df, x='Date', y=['Close', 'Monthly_average'])
