@@ -1,1 +1,1 @@
-web: python flask_app/app.py
+web: python streamlit_app/app.py
