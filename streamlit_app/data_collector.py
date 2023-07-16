@@ -41,18 +41,17 @@ def GetStockData(index="", duration="max"):
 
     return df
 
-def CalculateThreeMonthHigh(df, offsetMonths=3):
-    currDate  = df['Date'][-1:]
+def CalculateTimePeriodDelta(df, offsetMonths=3):
+    currDate  = df['Date'].iloc[-1]
     startDate = currDate - DateOffset(months=offsetMonths)
 
-    df = df[df['Date'].between(startDate.to_list()[0], currDate.to_list()[0])]
+    df = df[df['Date'].between(startDate, currDate)]
 
-    maxVal = df['Close'].max()
-    minVal = df['Close'].min()
-    currVal = df['Close'][-1:]
+    maxVal = df['Close'].max()    
+    currVal = df['Close'].iloc[-1]
 
     deltaChange = ((currVal - maxVal) / maxVal) * 100
-
+    
     return maxVal, deltaChange
 
 def CalculateChange(index=""):

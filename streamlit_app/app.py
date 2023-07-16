@@ -36,8 +36,27 @@ else:
     )
 
 if select_exchange and select_name:
+
+    plot_chart(select_exchange, select_name)    
     
-    symbol = stockList.loc[(stockList['Exchange']==select_exchange) & (stockList['Name']==select_name)]
+    # Add columns to show changes
+    col1, col2, col3 = st.columns(3)
+
+    n_Cols = 1
+    for iter in st.columns(4):
+        # Get 3, 6, 12 month changes
+        n_months = n_Cols * 3
+        n_Cols = n_Cols + 1
+        # Show changes months change
+        maxVal, deltaChange = CalculateTimePeriodDelta(df, n_months)
+        iter.metric(label="Delta to {0} months High".format(n_months),
+                     value="{:.2f} EUR".format(maxVal), delta="{0:.2f} %".format(deltaChange))   
+
+components.html('<script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="ramashwinkX" data-color="#FF5F5F" data-emoji="☕"  data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-position="Right" data-font-color="#ffffff" data-coffee-color="#FFDD00" ></script>')
+
+
+def plot_chart(exchange, stock):
+    symbol = stockList.loc[(stockList['Exchange']==exchange) & (stockList['Name']==stock)]
     symbol = symbol.reset_index()
         
     # Get closing price
@@ -57,19 +76,3 @@ if select_exchange and select_name:
     st.header(select_name)
     # Line chart
     st.line_chart(df, x='Date', y=['Close', 'Weekly_average', 'Monthly_average'])
-    
-    # Add columns to show changes
-    col1, col2, col3 = st.columns(3)
-    # Show 3 months change
-    maxVal, deltaChange = CalculateThreeMonthHigh(df, 3)
-    col1.metric(label="Delta to 3 months max value", value="%.2f %" % (maxVal), delta="%.2f EUR" % (deltaChange))
-    
-    # Show 3 months change
-    maxVal, deltaChange = CalculateThreeMonthHigh(df, 6)
-    col2.metric(label="Delta to 6 months max value", value="%.2f %" % (maxVal), delta="%.2f EUR" % (deltaChange))
-
-    # Show 3 months change
-    maxVal, deltaChange = CalculateThreeMonthHigh(df, 12)
-    col3.metric(label="Delta to 12 months max value", value="%.2f %" % (maxVal), delta="%.2f EUR" % (deltaChange))
-
-    components.html('<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9719516206957584" crossorigin="anonymous"></script>', height=300)
