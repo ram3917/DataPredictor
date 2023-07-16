@@ -48,9 +48,12 @@ def CalculateThreeMonthHigh(df, offsetMonths=3):
     df = df[df['Date'].between(startDate.to_list()[0], currDate.to_list()[0])]
 
     maxVal = df['Close'].max()
+    minVal = df['Close'].min()
     currVal = df['Close'][-1:]
 
-    return maxVal, (currVal - maxVal)
+    deltaChange = ((currVal - maxVal) / maxVal) * 100
+
+    return maxVal, deltaChange
 
 def CalculateChange(index=""):
     pass
