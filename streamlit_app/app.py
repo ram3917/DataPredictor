@@ -29,12 +29,14 @@ def plot_chart(exchange, stock):
     df['Weekly_average'] = df['Close'].rolling(7).mean()
     df['Monthly_average'] = df['Close'].rolling(30).mean()
 
-    plot_df = df[['Date','Close', 'Weekly_average','Monthly_average']].copy()
+    # df = df[['Date','Close', 'Weekly_average','Monthly_average']].copy()
 
     # Set title    
     st.header(select_name)
     # Line chart
     st.line_chart(df, x='Date', y=['Close', 'Weekly_average', 'Monthly_average'])
+
+    return df
 
 
 st.title('Stock Price for the Last Year')
@@ -60,7 +62,7 @@ else:
 
 if select_exchange and select_name:
 
-    plot_chart(select_exchange, select_name)    
+    df = plot_chart(select_exchange, select_name)    
     
     # Add columns to show changes
     col1, col2, col3 = st.columns(3)
