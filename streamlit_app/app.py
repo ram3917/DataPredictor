@@ -61,15 +61,15 @@ if select_exchange and select_name:
     # Add columns to show changes
     col1, col2, col3 = st.columns(3)
     # Show 3 months change
-    maxVal, deltaVal = CalculateThreeMonthHigh(df, 3)
-    col1.metric(label="Down from 3 months max value", value="%.2f EUR" % (maxVal), delta="%.2f EUR" % (deltaVal))
+    maxVal, deltaChange = CalculateThreeMonthHigh(df, 3)
+    col1.metric(label="Delta to 3 months max value", value="%.2f %" % (maxVal), delta="%.2f EUR" % (deltaChange))
     
     # Show 3 months change
-    maxVal, deltaVal = CalculateThreeMonthHigh(df, 6)
-    col2.metric(label="Down from 6 months max value", value="%.2f EUR" % (maxVal), delta="%.2f EUR" % (deltaVal))
+    maxVal, deltaChange = CalculateThreeMonthHigh(df, 6)
+    col2.metric(label="Delta to 6 months max value", value="%.2f %" % (maxVal), delta="%.2f EUR" % (deltaChange))
 
     # Show 3 months change
-    maxVal, deltaVal = CalculateThreeMonthHigh(df, 12)
-    col3.metric(label="Down from 12 months max value", value="%.2f EUR" % (maxVal), delta="%.2f EUR" % (deltaVal))
+    maxVal, deltaChange = CalculateThreeMonthHigh(df, 12)
+    col3.metric(label="Delta to 12 months max value", value="%.2f %" % (maxVal), delta="%.2f EUR" % (deltaChange))
 
     components.html('<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9719516206957584" crossorigin="anonymous"></script>', height=300)
